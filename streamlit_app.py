@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime, timedelta
 import plotly.express as px
-from streamlit_gsheets import GSheetsConnection
+#from streamlit_gsheets import GSheetsConnection
 
 # Connect to google spreadsheets
 #url = "https://docs.google.com/spreadsheets/d/1oGcvcMnjVTynDW-VjL58ssUaVVrlqWwt8AKtyLiDykk/edit?gid=0#gid=0"
