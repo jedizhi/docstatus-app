@@ -2,9 +2,14 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime, timedelta
 import plotly.express as px
+from streamlit_gsheets import GSheetsConnection
+
+# Connect to google spreadsheets
+
+conn = st.connection("gsheets", type=GSheetsConnection)
 
 # Load data
-df = pd.read_csv("SHC Heavy Equipment Master Log.csv")
+# df = pd.read_csv("SHC Heavy Equipment Master Log.csv")
 
 st.title("📆 JGCP-HE Document Expiry Status - PH III")
 
