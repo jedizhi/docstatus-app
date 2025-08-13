@@ -10,7 +10,7 @@ conn = st.connection("gsheets", type=GSheetsConnection)
 
 # Load data
 # df = pd.read_csv("SHC Heavy Equipment Master Log.csv")
-df = conn.read(spreadsheet = url)
+df = conn.read(spreadsheet=url)
 #st.dataframe(df)
 
 st.title("📆 JGCP-HE Document Expiry Status - PH III")
