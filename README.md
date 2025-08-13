@@ -1,4 +1,4 @@
-# 🎈 Blank app template
+# 🎈 Document Status Viewer
 
 A simple Streamlit app template for you to modify!
 
