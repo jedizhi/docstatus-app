@@ -5,12 +5,12 @@ import plotly.express as px
 from streamlit_gsheets import GSheetsConnection
 
 # Connect to google spreadsheets
-url = "https://docs.google.com/spreadsheets/d/1Iyau6bAAdbVz9iVYA2ai5OQZNs4mRbSly0Mo6YEo6Rk/edit?usp=sharing"
+#url = "https://docs.google.com/spreadsheets/d/1Iyau6bAAdbVz9iVYA2ai5OQZNs4mRbSly0Mo6YEo6Rk/edit?usp=sharing"
 conn = st.connection("gsheets", type=GSheetsConnection)
 
 # Load data
 # df = pd.read_csv("SHC Heavy Equipment Master Log.csv")
-df = conn.read(spreadsheet = url)
+df = conn.read(worksheet = Sheet1)
 st.dataframe(df)
 
 st.title("📆 JGCP-HE Document Expiry Status - PH III")
