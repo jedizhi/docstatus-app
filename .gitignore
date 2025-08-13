@@ -1,7 +1,7 @@
 .streamlit/secrets.toml
 
 [connections.gsheets]
-url = "https://docs.google.com/spreadsheets/d/1Iyau6bAAdbVz9iVYA2ai5OQZNs4mRbSly0Mo6YEo6Rk/edit?usp=sharing"
+url = "https://docs.google.com/spreadsheets/d/1oGcvcMnjVTynDW-VjL58ssUaVVrlqWwt8AKtyLiDykk/edit?gid=0#gid=0"
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
