@@ -61,14 +61,16 @@ for _, row in filtered_df.iterrows():
     for doc, status_col in zip(exp_date_column, status_columns):
         if row[status_col] == "Expired":
             expired_details.append({
-                "Equipment Type": row["Equipment Type"], 
+                "Equipment Type": row["Equipment Type"],
+                "Company_Subontractor": row["Company_Subcontractor"],  
                 "Registration Number": row["Registration Number"], 
                 "Document Type": doc,
                 "Expiry Date": row[doc]
             })
         elif row[status_col] == "For Renewal":
             renewal_details.append({
-                "Equipment Type": row["Equipment Type"], 
+                "Equipment Type": row["Equipment Type"],
+                "Company_Subontractor": row["Company_Subcontractor"], 
                 "Registration Number": row["Registration Number"], 
                 "Document Type": doc,
                 "Expiry Date": row[doc]
