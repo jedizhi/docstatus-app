@@ -97,7 +97,9 @@ if not expired_details.empty:
         x="Document Type",
         y="Count",
         text="Count",
-        title="Expired Documents by Type"
+        title="Expired Documents by Type",
+        width=60,
+        height=550
     )
     fig_expired.update_traces(textposition="outside")
     fig_expired.update_layout(xaxis_tickangle=-45)
@@ -124,7 +126,9 @@ if not renewal_details.empty:
         x="Document Type",
         y="Count",
         text="Count",
-        title="For Renewal Documents by Type"
+        title="For Renewal Documents by Type",
+        width=60,
+        height=550
     )
     fig_renewal.update_traces(textposition="outside")
     fig_renewal.update_layout(xaxis_tickangle=-45)
