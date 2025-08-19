@@ -40,6 +40,7 @@ for col in exp_date_column:
 
 status_columns = [f"{col}_Status" for col in exp_date_column]
 
+
 # =====================
 # FILTER BY REGISTRATION NUMBER
 # =====================
