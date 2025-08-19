@@ -9,7 +9,7 @@ from streamlit_gsheets import GSheetsConnection
 # =====================
 url = "https://docs.google.com/spreadsheets/d/12UG2ofCyDGNl8jUKbuxMZrcTQJHh5G4Ypv_6FUc1luk/edit?gid=1073396090#gid=1073396090"
 conn = st.connection("gsheets", type=GSheetsConnection)
-df = conn.read(spreadsheet=url)
+df = conn.read(spreadsheet=url, ttl=0)
 
 st.title("📆 JGCP-HE Document Expiry Status - PH III")
 
