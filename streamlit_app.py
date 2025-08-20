@@ -17,7 +17,7 @@ st.title("📆 JGCP-HE Document Expiry Status - PH III")
 # DATE HANDLING
 # =====================
 exp_date_column = [
-    "Registration Expiry", "MVPI Expiry", "Insurance expiry", 
+    "Registration Expiry", "MVPI Expiry", "Equipment Insurance Exp", 
     "Third Party Expiry", "License Expiry", 
     "Cert Expiry", "Medical Insurance Expiry", "Fitness Expiry"
 ]
