@@ -146,7 +146,6 @@ if not renewal_details.empty:
         y="Count",
         text="Count",
         title=f"For Renewal Documents by Type ({ownership})",
-        title="For Renewal Documents by Type",
         width=60,
         height=550
     )
