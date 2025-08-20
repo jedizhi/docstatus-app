@@ -29,8 +29,7 @@ if ownership != "All":
 # =====================
 # DATE HANDLING
 # =====================
-exp_date_column = [
-    "Registration Expiry", "MVPI Expiry", "Equipment Insurance Exp", 
+exp_date_column = [ 
     "Registration Expiry", "MVPI Expiry", "Equipment Insurance Exp", 
     "Third Party Expiry", "License Expiry", 
     "Cert Expiry", "Medical Insurance Expiry", "Fitness Expiry"
