@@ -14,9 +14,23 @@ df = conn.read(spreadsheet=url, ttl=0)
 st.title("📆 JGCP-HE Document Expiry Status - PH III")
 
 # =====================
+# OWNERSHIP FILTER
+# =====================
+df["Ownership"] = df["Ownership"].astype(str).str.strip().str.title()
+
+ownership = st.radio(
+    "Filter By Ownership:",
+    ["All", "Rental", "Subcontractor"]
+)
+
+if ownership != "All":
+    df = df[df["Ownership"] == ownership]
+
+# =====================
 # DATE HANDLING
 # =====================
 exp_date_column = [
+    "Registration Expiry", "MVPI Expiry", "Equipment Insurance Exp", 
     "Registration Expiry", "MVPI Expiry", "Equipment Insurance Exp", 
     "Third Party Expiry", "License Expiry", 
     "Cert Expiry", "Medical Insurance Expiry", "Fitness Expiry"
@@ -40,7 +54,6 @@ for col in exp_date_column:
 
 status_columns = [f"{col}_Status" for col in exp_date_column]
 
-
 # =====================
 # FILTER BY REGISTRATION NUMBER
 # =====================
@@ -63,18 +76,24 @@ for _, row in filtered_df.iterrows():
         if row[status_col] == "Expired":
             expired_details.append({
                 "Equipment Type": row["Equipment Type"],
+                "Ownership": row["Ownership"],
+                "Company Name": row["Company Name"],  
                 "Company Name": row["Company Name"],  
                 "Registration Number": row["Registration Number"], 
                 "Document Type": doc,
                 "Expiry Date": row[doc]
+                
             })
         elif row[status_col] == "For Renewal":
             renewal_details.append({
                 "Equipment Type": row["Equipment Type"],
+                "Ownership": row["Ownership"],
+                "Company Name": row["Company Name"], 
                 "Company Name": row["Company Name"], 
                 "Registration Number": row["Registration Number"], 
                 "Document Type": doc,
                 "Expiry Date": row[doc]
+                
             })
 
 expired_details = pd.DataFrame(expired_details)
@@ -98,8 +117,7 @@ if not expired_details.empty:
         x="Document Type",
         y="Count",
         text="Count",
-        title="Expired Documents by Type",
-        width=60,
+        title=f"Expired Documents by Type ({ownership})",
         height=550
     )
     fig_expired.update_traces(textposition="outside")
@@ -127,6 +145,7 @@ if not renewal_details.empty:
         x="Document Type",
         y="Count",
         text="Count",
+        title=f"For Renewal Documents by Type ({ownership})",
         title="For Renewal Documents by Type",
         width=60,
         height=550
