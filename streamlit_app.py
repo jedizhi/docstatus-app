@@ -77,7 +77,6 @@ for _, row in filtered_df.iterrows():
                 "Equipment Type": row["Equipment Type"],
                 "Ownership": row["Ownership"],
                 "Company Name": row["Company Name"],  
-                "Company Name": row["Company Name"],  
                 "Registration Number": row["Registration Number"], 
                 "Document Type": doc,
                 "Expiry Date": row[doc]
@@ -87,7 +86,6 @@ for _, row in filtered_df.iterrows():
             renewal_details.append({
                 "Equipment Type": row["Equipment Type"],
                 "Ownership": row["Ownership"],
-                "Company Name": row["Company Name"], 
                 "Company Name": row["Company Name"], 
                 "Registration Number": row["Registration Number"], 
                 "Document Type": doc,
