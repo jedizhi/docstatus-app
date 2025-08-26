@@ -81,6 +81,7 @@ else:
 # EQUIPMENT TYPE COUNT CHART
 # =====================
 st.subheader("📊 Equipment Type Distribution")
+st.write("### Total Equipment:", + df["Equipment Type"].count(), width="stretch")
 if not filtered_df.empty:
     equipment_counts = filtered_df["Equipment Type"].value_counts().reset_index()
     equipment_counts.columns = ["Equipment Type", "Count"]
