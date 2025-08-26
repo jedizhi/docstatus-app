@@ -18,6 +18,7 @@ st.title("📆 JGCP-HE Document Expiry Status - PH III")
 # =====================
 df["Ownership"] = df["Ownership"].astype(str).str.strip().str.title()
 
+
 ownership = st.radio(
     "Filter By Ownership:",
     ["All", "Rental", "Subcontractor"]
@@ -29,10 +30,11 @@ if ownership != "All":
 # =====================
 # DATE HANDLING
 # =====================
-exp_date_column = [ 
+exp_date_column = [
     "Registration Expiry", "MVPI Expiry", "Equipment Insurance Exp", 
     "Third Party Expiry", "License Expiry", 
-    "Cert Expiry", "Medical Insurance Expiry", "Fitness Expiry"
+    "Cert Expiry", "Medical Insurance Expiry", "Fitness Expiry",
+    "TR Sticker Expiry Date"
 ]
 df[exp_date_column] = df[exp_date_column].apply(pd.to_datetime, errors="coerce")
 today = pd.to_datetime(datetime.today().date())
@@ -65,6 +67,37 @@ else:
     filtered_df = df
 
 # =====================
+# FILTER BY EQUIPMENT TYPE
+# =====================
+equipment_type = sorted(df["Equipment Type"].dropna().astype(str).unique())
+selected_equipment = st.selectbox("🔍 Search Equipment Type", ["All"] + equipment_type)
+
+if selected_equipment != "All":
+    filtered_df = df[df["Equipment Type"] == selected_equipment]
+else:
+    filtered_df = df
+
+# =====================
+# EQUIPMENT TYPE COUNT CHART
+# =====================
+st.subheader("📊 Equipment Type Distribution")
+if not filtered_df.empty:
+    equipment_counts = filtered_df["Equipment Type"].value_counts().reset_index()
+    equipment_counts.columns = ["Equipment Type", "Count"]
+
+    fig_equipment = px.bar(
+        equipment_counts,
+        x="Equipment Type",
+        y="Count",
+        text="Count",
+        title="Equipment Type Count",
+        height=600
+    )
+    fig_equipment.update_traces(textposition="outside")
+    fig_equipment.update_layout(xaxis_tickangle=-45)
+    st.plotly_chart(fig_equipment, use_container_width=True)
+
+# =====================
 # BUILD EXPIRED & RENEWAL LISTS
 # =====================
 expired_details = []
@@ -76,11 +109,11 @@ for _, row in filtered_df.iterrows():
             expired_details.append({
                 "Equipment Type": row["Equipment Type"],
                 "Ownership": row["Ownership"],
-                "Company Name": row["Company Name"],  
+                "Company Name": row["Company Name"],   
                 "Registration Number": row["Registration Number"], 
                 "Document Type": doc,
-                "Expiry Date": row[doc]
-                
+                "Expiry Date": row[doc],
+                "TR Sticker Expiry Date": row["TR Sticker Expiry Date"] 
             })
         elif row[status_col] == "For Renewal":
             renewal_details.append({
@@ -89,17 +122,19 @@ for _, row in filtered_df.iterrows():
                 "Company Name": row["Company Name"], 
                 "Registration Number": row["Registration Number"], 
                 "Document Type": doc,
-                "Expiry Date": row[doc]
-                
+                "Expiry Date": row[doc],
+                "TR Sticker Expiry Date": row["TR Sticker Expiry Date"]
             })
 
 expired_details = pd.DataFrame(expired_details)
 renewal_details = pd.DataFrame(renewal_details)
 
-# Format dates for display
+# Format dates for display & reset index starting at 1
 for df_details in [expired_details, renewal_details]:
     if not df_details.empty:
-        df_details["Expiry Date"] = pd.to_datetime(df_details["Expiry Date"], errors="coerce").dt.strftime("%d-%b-%Y")
+        for col in ["Expiry Date", "TR Sticker Expiry Date"]:
+            df_details[col] = pd.to_datetime(df_details[col], errors="coerce").dt.strftime("%d-%b-%Y")
+        df_details.index = df_details.index + 1  # start index at 1
 
 # =====================
 # CHART: EXPIRED
@@ -143,7 +178,6 @@ if not renewal_details.empty:
         y="Count",
         text="Count",
         title=f"For Renewal Documents by Type ({ownership})",
-        width=60,
         height=550
     )
     fig_renewal.update_traces(textposition="outside")
