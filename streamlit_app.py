@@ -33,8 +33,8 @@ if ownership != "All":
 exp_date_column = [
     "Registration Expiry", "MVPI Expiry", "Equipment Insurance Exp", 
     "Third Party Expiry", "License Expiry", 
-    "Cert Expiry", "Medical Insurance Expiry", "Fitness Expiry",
-    "TR Sticker Expiry Date"
+    "Cert Expiry", "Medical Insurance Expiry", "Fitness Expiry"
+    
 ]
 df[exp_date_column] = df[exp_date_column].apply(pd.to_datetime, errors="coerce")
 today = pd.to_datetime(datetime.today().date())
@@ -81,7 +81,8 @@ else:
 # EQUIPMENT TYPE COUNT CHART
 # =====================
 st.subheader("📊 Equipment Type Distribution")
-st.write("### Total Equipment:", + df["Equipment Type"].count(), width="stretch")
+st.write("### Total Equipment:", + df["Equipment Type"].count())
+
 if not filtered_df.empty:
     equipment_counts = filtered_df["Equipment Type"].value_counts().reset_index()
     equipment_counts.columns = ["Equipment Type", "Count"]
@@ -113,8 +114,7 @@ for _, row in filtered_df.iterrows():
                 "Company Name": row["Company Name"],   
                 "Registration Number": row["Registration Number"], 
                 "Document Type": doc,
-                "Expiry Date": row[doc],
-                "TR Sticker Expiry Date": row["TR Sticker Expiry Date"] 
+                "Expiry Date": row[doc]
             })
         elif row[status_col] == "For Renewal":
             renewal_details.append({
@@ -123,8 +123,7 @@ for _, row in filtered_df.iterrows():
                 "Company Name": row["Company Name"], 
                 "Registration Number": row["Registration Number"], 
                 "Document Type": doc,
-                "Expiry Date": row[doc],
-                "TR Sticker Expiry Date": row["TR Sticker Expiry Date"]
+                "Expiry Date": row[doc]
             })
 
 expired_details = pd.DataFrame(expired_details)
@@ -133,7 +132,7 @@ renewal_details = pd.DataFrame(renewal_details)
 # Format dates for display & reset index starting at 1
 for df_details in [expired_details, renewal_details]:
     if not df_details.empty:
-        for col in ["Expiry Date", "TR Sticker Expiry Date"]:
+        for col in ["Expiry Date"]:
             df_details[col] = pd.to_datetime(df_details[col], errors="coerce").dt.strftime("%d-%b-%Y")
         df_details.index = df_details.index + 1  # start index at 1
 
