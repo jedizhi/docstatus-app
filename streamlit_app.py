@@ -69,13 +69,13 @@ else:
 # =====================
 # FILTER BY EQUIPMENT TYPE
 # =====================
-equipment_type = sorted(df["Equipment Type"].dropna().astype(str).unique())
-selected_equipment = st.selectbox("🔍 Search Equipment Type", ["All"] + equipment_type)
+# equipment_type = sorted(df["Equipment Type"].dropna().astype(str).unique())
+# selected_equipment = st.selectbox("🔍 Search Equipment Type", ["All"] + equipment_type)
 
-if selected_equipment != "All":
-    filtered_df = df[df["Equipment Type"] == selected_equipment]
-else:
-    filtered_df = df
+# if selected_equipment != "All":
+#     filtered_df = df[df["Equipment Type"] == selected_equipment]
+# else:
+#     filtered_df = df
 
 # =====================
 # EQUIPMENT TYPE COUNT CHART
