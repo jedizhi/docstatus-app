@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 import plotly.express as px
 import plotly.graph_objects as go
 from streamlit_gsheets import GSheetsConnection
-import openpyxl
+
 
 # =====================
 # PAGE CONFIG
