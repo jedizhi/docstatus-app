@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 import plotly.express as px
 import plotly.graph_objects as go
 from streamlit_gsheets import GSheetsConnection
+import openpyxl
 
 # =====================
 # PAGE CONFIG
@@ -48,7 +49,7 @@ st.markdown("""
 # =====================
 @st.cache_data(ttl=0)
 def load_data():
-    url = "https://docs.google.com/spreadsheets/d/12UG2ofCyDGNl8jUKbuxMZrcTQJHh5G4Ypv_6FUc1luk/edit?gid=1073396090#gid=1073396090"
+    url = "https://docs.google.com/spreadsheets/d/12UG2ofCyDGNl8jUKbuxMZrcTQJHh5G4Ypv_6FUc1luk/edit?pli=1&gid=1073396090#gid=1073396090"
     conn = st.connection("gsheets", type=GSheetsConnection)
     df = conn.read(spreadsheet=url, ttl=0)
     return df
@@ -397,7 +398,7 @@ with col1:
         with st.expander(f"📋 View {len(expired_df)} Expired Document Details"):
             expired_display = expired_df.copy()
             if not expired_display.empty:
-                expired_display["Expiry Date"] = pd.to_datetime(expired_display["Expiry Date"], errors="coerce").dt.strftime("%d-%b-%Y")
+                expired_display["Expiry Date"] = pd.to_datetime(expired_display["Expiry Date"], errors="coerce").dt.strftime("%b-%d-%Y")
                 expired_display.index = expired_display.index + 1
                 st.dataframe(expired_display, use_container_width=True)
     else:
@@ -426,7 +427,7 @@ with col2:
         with st.expander(f"📋 View {len(renewal_df)} Renewal Document Details"):
             renewal_display = renewal_df.copy()
             if not renewal_display.empty:
-                renewal_display["Expiry Date"] = pd.to_datetime(renewal_display["Expiry Date"], errors="coerce").dt.strftime("%d-%b-%Y")
+                renewal_display["Expiry Date"] = pd.to_datetime(renewal_display["Expiry Date"], errors="coerce").dt.strftime("%b-%d-%Y")
                 renewal_display.index = renewal_display.index + 1
                 st.dataframe(renewal_display, use_container_width=True)
     else:
@@ -442,7 +443,7 @@ with col1[0]:
     st.markdown(f"Total Pending Documents (with placeholder date {pending_target_date}): **{pending_count}**")
     if not pending_df.empty:
         pending_display = pending_df.copy()
-        pending_display["Expiry Date"] = pd.to_datetime(pending_display["Expiry Date"], errors="coerce").dt.strftime("%d-%b-%Y")
+        pending_display["Expiry Date"] = pd.to_datetime(pending_display["Expiry Date"], errors="coerce").dt.strftime("%b-%d-%Y")
         pending_display.index = pending_display.index + 1
         with st.expander(f"📋 View {len(pending_df)} Pending Document Details"):
             st.dataframe(pending_display, use_container_width=True)
