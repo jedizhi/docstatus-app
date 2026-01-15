@@ -71,7 +71,7 @@ st.sidebar.markdown('<div class="sidebar-header">🎛️ Dashboard Controls</div
 # Ownership filter
 ownership = st.sidebar.radio(
     "📋 Filter By Ownership:",
-    ["All", "Rental", "Subcontractor"],
+    ["All", "Rental", "Subcontractor","Company","Unknown"],
     help="Select equipment ownership type"
 )
 
