@@ -99,10 +99,10 @@ selected_location = st.sidebar.selectbox(
     help="Filter by equipment location"
 )
 
-if selected_location != "All" and "Location" in filtered_df.columns:
-    filtered_df = filtered_df[
-        filtered_df["Location"].str.strip().str.title() == selected_location
-    ]
+#if selected_location != "All" and "Location" in filtered_df.columns:
+    #filtered_df = filtered_df[
+        #filtered_df["Location"].str.strip().str.title() == selected_location
+    #]
 
 # Registration number filter
 registration_numbers = sorted(df["Registration Number"].dropna().astype(str).unique())
