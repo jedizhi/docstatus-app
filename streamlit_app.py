@@ -136,7 +136,7 @@ selected_location = st.sidebar.selectbox(
 
 if selected_location != "All" and "Location" in filtered_df.columns:
     filtered_df = filtered_df[
-        #filtered_df["Location"].str.strip().str.title() == selected_location]
+        filtered_df["Location"].str.strip().str.title() == selected_location]
 
 # Refresh button
 if st.sidebar.button("🔄 Refresh Data", type="primary"):
