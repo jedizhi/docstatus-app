@@ -61,25 +61,6 @@ except Exception as e:
     st.stop()
 
 # =====================
-# APPLY FILTERS
-# =====================
-
-filtered_df = df.copy()
-
-if ownership != "All":
-    filtered_df = filtered_df[filtered_df["Ownership"] == ownership]
-
-if selected_registration != "All":
-    filtered_df = filtered_df[filtered_df["Registration Number"] == selected_registration]
-
-if selected_equipment != "All":
-    filtered_df = filtered_df[filtered_df["Equipment Type"] == selected_equipment]
-
-# ✅ LOCATION FILTER MUST BE HERE
-if selected_location != "All":
-    filtered_df = filtered_df[filtered_df["Location"] == selected_location]
-
-# =====================
 # SIDEBAR CONTROLS
 # =====================
 st.sidebar.markdown('<div class="sidebar-header">🎛️ Dashboard Controls</div>', unsafe_allow_html=True)
@@ -93,15 +74,35 @@ ownership = st.sidebar.radio(
     ["All", "Rental", "Subcontractor","Company","Unknown"],
     help="Select equipment ownership type"
 )
+# Clean Location column
+if "Location" in df.columns:
+    df["Location"] = (
+        df["Location"]
+        .astype(str)
+        .str.strip()
+        .str.title()
+    )
 
 # Location filter
-locations = sorted(df["Location"].dropna().astype(str).unique())
+locations = sorted(
+    df["Location"]
+    .dropna()
+    .astype(str)
+    .str.strip()
+    .str.title()
+    .unique()
+)
+
 selected_location = st.sidebar.selectbox(
     "📍 Location:",
     ["All"] + locations,
     help="Filter by equipment location"
 )
 
+if selected_location != "All" and "Location" in filtered_df.columns:
+    filtered_df = filtered_df[
+        filtered_df["Location"].str.strip().str.title() == selected_location
+    ]
 
 # Registration number filter
 registration_numbers = sorted(df["Registration Number"].dropna().astype(str).unique())
@@ -119,6 +120,24 @@ selected_equipment = st.sidebar.selectbox(
     help="Filter by equipment type"
 )
 
+# =====================
+# APPLY FILTERS
+# =====================
+
+filtered_df = df.copy()
+
+if ownership != "All":
+    filtered_df = filtered_df[filtered_df["Ownership"] == ownership]
+
+if selected_registration != "All":
+    filtered_df = filtered_df[filtered_df["Registration Number"] == selected_registration]
+
+if selected_equipment != "All":
+    filtered_df = filtered_df[filtered_df["Equipment Type"] == selected_equipment]
+
+# ✅ LOCATION FILTER MUST BE HERE
+if selected_location != "All":
+    filtered_df = filtered_df[filtered_df["Location"] == selected_location]
 
 
 
