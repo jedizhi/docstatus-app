@@ -63,80 +63,111 @@ except Exception as e:
 # =====================
 # SIDEBAR CONTROLS
 # =====================
-st.sidebar.markdown('<div class="sidebar-header">🎛️ Dashboard Controls</div>', unsafe_allow_html=True)
+st.sidebar.markdown(
+    '<div class="sidebar-header">🎛️ Dashboard Controls</div>',
+    unsafe_allow_html=True
+)
 
-# Clean ownership data
-#df["Ownership"] = df["Ownership"].astype(str).str.strip().str.title()
+# -------------------------------------------------
+# CLEAN TEXT COLUMNS FIRST (IMPORTANT)
+# -------------------------------------------------
+TEXT_COLUMNS = [
+    "Ownership",
+    "Equipment Type",
+    "Registration Number",
+    "Location",
+    "Company Name"
+]
 
-# Ownership filter
+for col in TEXT_COLUMNS:
+    if col in df.columns:
+        df[col] = (
+            df[col]
+            .astype(str)
+            .str.strip()
+            .str.title()
+        )
+
+# -------------------------------------------------
+# OWNERSHIP FILTER
+# -------------------------------------------------
 ownership = st.sidebar.radio(
     "📋 Filter By Ownership:",
-    ["All", "Rental", "Subcontractor","Company","Unknown"],
+    ["All", "Rental", "Subcontractor", "Company", "Unknown"],
     help="Select equipment ownership type"
 )
 
-# Registration number filter
-registration_numbers = sorted(df["Registration Number"].dropna().astype(str).unique())
+# -------------------------------------------------
+# REGISTRATION NUMBER FILTER
+# -------------------------------------------------
+registration_numbers = sorted(
+    df["Registration Number"]
+    .dropna()
+    .unique()
+)
+
 selected_registration = st.sidebar.selectbox(
     "🔍 Registration Number:",
     ["All"] + registration_numbers,
     help="Filter by specific registration number"
 )
 
-# Equipment type filter
-equipment_types = sorted(df["Equipment Type"].dropna().astype(str).unique())
+# -------------------------------------------------
+# EQUIPMENT TYPE FILTER
+# -------------------------------------------------
+equipment_types = sorted(
+    df["Equipment Type"]
+    .dropna()
+    .unique()
+)
+
 selected_equipment = st.sidebar.selectbox(
     "⚙️ Equipment Type:",
     ["All"] + equipment_types,
     help="Filter by equipment type"
 )
 
+# -------------------------------------------------
+# LOCATION FILTER (MUST COME AFTER CLEANING)
+# -------------------------------------------------
+if "Location" in df.columns:
+    locations = sorted(
+        df["Location"]
+        .dropna()
+        .unique()
+    )
+else:
+    locations = []
+
 selected_location = st.sidebar.selectbox(
     "📍 Location:",
     ["All"] + locations,
     help="Filter by equipment location"
 )
+
 # =====================
 # APPLY FILTERS
 # =====================
-
 filtered_df = df.copy()
 
 if ownership != "All":
     filtered_df = filtered_df[filtered_df["Ownership"] == ownership]
 
 if selected_registration != "All":
-    filtered_df = filtered_df[filtered_df["Registration Number"] == selected_registration]
+    filtered_df = filtered_df[
+        filtered_df["Registration Number"] == selected_registration
+    ]
 
 if selected_equipment != "All":
-    filtered_df = filtered_df[filtered_df["Equipment Type"] == selected_equipment]
-
-# ✅ LOCATION FILTER MUST BE HERE
-#if selected_location != "All":
-    #filtered_df = filtered_df[filtered_df["Location"] == selected_location]
-    
-# Clean Location column
-if "Location" in df.columns:
-    df["Location"] = (
-        df["Location"]
-        .astype(str)
-        .str.strip()
-        .str.title()
-    )
-
-# Location filter
-locations = sorted(
-    df["Location"]
-    .dropna()
-    .astype(str)
-    .str.strip()
-    .str.title()
-    .unique()
-)
+    filtered_df = filtered_df[
+        filtered_df["Equipment Type"] == selected_equipment
+    ]
 
 if selected_location != "All" and "Location" in filtered_df.columns:
     filtered_df = filtered_df[
-        filtered_df["Location"].str.strip().str.title() == selected_location]
+        filtered_df["Location"] == selected_location
+    ]
+
 
 # Refresh button
 if st.sidebar.button("🔄 Refresh Data", type="primary"):
