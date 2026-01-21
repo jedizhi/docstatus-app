@@ -91,6 +91,11 @@ selected_equipment = st.sidebar.selectbox(
     help="Filter by equipment type"
 )
 
+selected_location = st.sidebar.selectbox(
+    "📍 Location:",
+    ["All"] + locations,
+    help="Filter by equipment location"
+)
 # =====================
 # APPLY FILTERS
 # =====================
@@ -127,12 +132,6 @@ locations = sorted(
     .str.strip()
     .str.title()
     .unique()
-)
-
-selected_location = st.sidebar.selectbox(
-    "📍 Location:",
-    ["All"] + locations,
-    help="Filter by equipment location"
 )
 
 if selected_location != "All" and "Location" in filtered_df.columns:
