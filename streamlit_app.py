@@ -107,8 +107,9 @@ if selected_equipment != "All":
     filtered_df = filtered_df[filtered_df["Equipment Type"] == selected_equipment]
 
 # ✅ LOCATION FILTER MUST BE HERE
-if selected_location != "All":
-    filtered_df = filtered_df[filtered_df["Location"] == selected_location]
+#if selected_location != "All":
+    #filtered_df = filtered_df[filtered_df["Location"] == selected_location]
+    
 # Clean Location column
 if "Location" in df.columns:
     df["Location"] = (
