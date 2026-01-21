@@ -75,6 +75,15 @@ ownership = st.sidebar.radio(
     help="Select equipment ownership type"
 )
 
+# Location filter
+locations = sorted(df["Location"].dropna().astype(str).unique())
+selected_location = st.sidebar.selectbox(
+    "📍 Location:",
+    ["All"] + locations,
+    help="Filter by equipment location"
+)
+
+
 # Registration number filter
 registration_numbers = sorted(df["Registration Number"].dropna().astype(str).unique())
 selected_registration = st.sidebar.selectbox(
@@ -90,6 +99,10 @@ selected_equipment = st.sidebar.selectbox(
     ["All"] + equipment_types,
     help="Filter by equipment type"
 )
+
+if selected_location != "All":
+    filtered_df = filtered_df[filtered_df["Location"] == selected_location]
+
 
 # Refresh button
 if st.sidebar.button("🔄 Refresh Data", type="primary"):
@@ -305,7 +318,8 @@ with col4:
 st.markdown("---")
 
 # Charts row
-col1, col2 = st.columns(2)
+col1, col2, col3 = st.columns(3)
+
 
 with col1:
     st.subheader("📈 Document Status Distribution")
@@ -366,6 +380,28 @@ with col2:
         fig_equipment.update_traces(textposition="outside")
         fig_equipment.update_layout(xaxis_tickangle=-45, showlegend=False)
         st.plotly_chart(fig_equipment, use_container_width=True)
+
+with col3:
+    st.subheader("📍 Equipment by Location")
+    if not filtered_df.empty:
+        location_counts = filtered_df["Location"].value_counts().reset_index()
+        location_counts.columns = ["Location", "Count"]
+
+        fig_location = px.bar(
+            location_counts,
+            x="Location",
+            y="Count",
+            text="Count",
+            title="Equipment Distribution by Location",
+            color="Count",
+            color_continuous_scale="Greens",
+            height=550
+        )
+        fig_location.update_traces(textposition="outside")
+        fig_location.update_layout(xaxis_tickangle=-45, showlegend=False)
+        st.plotly_chart(fig_location, use_container_width=True)
+    else:
+        st.info("No data available for selected filters.")
 
 # =====================
 # ROW 2: EXPIRED & RENEWAL CHARTS
