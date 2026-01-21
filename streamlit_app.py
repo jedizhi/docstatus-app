@@ -74,35 +74,6 @@ ownership = st.sidebar.radio(
     ["All", "Rental", "Subcontractor","Company","Unknown"],
     help="Select equipment ownership type"
 )
-# Clean Location column
-if "Location" in df.columns:
-    df["Location"] = (
-        df["Location"]
-        .astype(str)
-        .str.strip()
-        .str.title()
-    )
-
-# Location filter
-locations = sorted(
-    df["Location"]
-    .dropna()
-    .astype(str)
-    .str.strip()
-    .str.title()
-    .unique()
-)
-
-selected_location = st.sidebar.selectbox(
-    "📍 Location:",
-    ["All"] + locations,
-    help="Filter by equipment location"
-)
-
-#if selected_location != "All" and "Location" in filtered_df.columns:
-    #filtered_df = filtered_df[
-        #filtered_df["Location"].str.strip().str.title() == selected_location
-    #]
 
 # Registration number filter
 registration_numbers = sorted(df["Registration Number"].dropna().astype(str).unique())
@@ -138,6 +109,36 @@ if selected_equipment != "All":
 # ✅ LOCATION FILTER MUST BE HERE
 if selected_location != "All":
     filtered_df = filtered_df[filtered_df["Location"] == selected_location]
+# Clean Location column
+if "Location" in df.columns:
+    df["Location"] = (
+        df["Location"]
+        .astype(str)
+        .str.strip()
+        .str.title()
+    )
+
+# Location filter
+locations = sorted(
+    df["Location"]
+    .dropna()
+    .astype(str)
+    .str.strip()
+    .str.title()
+    .unique()
+)
+
+selected_location = st.sidebar.selectbox(
+    "📍 Location:",
+    ["All"] + locations,
+    help="Filter by equipment location"
+)
+
+if selected_location != "All" and "Location" in filtered_df.columns:
+    filtered_df = filtered_df[
+        #filtered_df["Location"].str.strip().str.title() == selected_location
+    ]
+
 
 
 
