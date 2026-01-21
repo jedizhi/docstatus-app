@@ -100,8 +100,25 @@ selected_equipment = st.sidebar.selectbox(
     help="Filter by equipment type"
 )
 
+# =====================
+# APPLY FILTERS
+# =====================
+
+filtered_df = df.copy()
+
+if ownership != "All":
+    filtered_df = filtered_df[filtered_df["Ownership"] == ownership]
+
+if selected_registration != "All":
+    filtered_df = filtered_df[filtered_df["Registration Number"] == selected_registration]
+
+if selected_equipment != "All":
+    filtered_df = filtered_df[filtered_df["Equipment Type"] == selected_equipment]
+
+# ✅ LOCATION FILTER MUST BE HERE
 if selected_location != "All":
     filtered_df = filtered_df[filtered_df["Location"] == selected_location]
+
 
 
 # Refresh button
