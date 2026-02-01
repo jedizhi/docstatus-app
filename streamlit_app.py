@@ -49,7 +49,7 @@ st.markdown("""
 # =====================
 @st.cache_data(ttl=0)
 def load_data():
-    url = "https://docs.google.com/spreadsheets/d/12UG2ofCyDGNl8jUKbuxMZrcTQJHh5G4Ypv_6FUc1luk/edit?gid=1073396090#"
+    url = "https://docs.google.com/spreadsheets/d/12UG2ofCyDGNl8jUKbuxMZrcTQJHh5G4Ypv_6FUc1luk/edit?pli=1&gid=1073396090#gid=1073396090"
     conn = st.connection("gsheets", type=GSheetsConnection)
     df = conn.read(spreadsheet=url, ttl=0)
     return df
