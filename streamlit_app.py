@@ -429,8 +429,8 @@ with col1:
 with col2:
     st.subheader("🏗️ Equipment _Type Distribution")
     if not filtered_df.empty:
-        equipment_counts = filtered_df["Equipment _Type"].value_counts().reset_index()
-        equipment_counts.columns = ["Equipment _Type", "Count"]
+        equipment_counts = filtered_df["Equipment_Type"].value_counts().reset_index()
+        equipment_counts.columns = ["Equipment_Type", "Count"]
         
         fig_equipment = px.bar(
             equipment_counts,
