@@ -189,8 +189,8 @@ original_df = df.copy()
 
 # Clean the data first - remove header rows and invalid entries
 df = df.dropna(subset=["Equipment_Type"])
-df = df[df["Equipment _Type"].astype(str).str.strip() != ""]
-df = df[df["Equipment _Type"].astype(str).str.lower() != "Equipment _Type"]
+df = df[df["Equipment_Type"].astype(str).str.strip() != ""]
+df = df[df["Equipment_Type"].astype(str).str.lower() != "Equipment _Type"]
 
 # Try to find the serial number column
 serial_col = None
