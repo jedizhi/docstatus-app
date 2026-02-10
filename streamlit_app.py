@@ -113,7 +113,7 @@ selected_registration = st.sidebar.selectbox(
 )
 
 # -------------------------------------------------
-# Equipment _Type FILTER
+# Equipment Type FILTER
 # -------------------------------------------------
 Equipment_Type = sorted(
     df["Equipment_Type"]
@@ -190,7 +190,7 @@ original_df = df.copy()
 # Clean the data first - remove header rows and invalid entries
 df = df.dropna(subset=["Equipment_Type"])
 df = df[df["Equipment_Type"].astype(str).str.strip() != ""]
-df = df[df["Equipment_Type"].astype(str).str.lower() != "Equipment _Type"]
+df = df[df["Equipment_Type"].astype(str).str.lower() != "Equipment_Type"]
 
 # Try to find the serial number column
 serial_col = None
@@ -205,7 +205,7 @@ if serial_col:
     df = df[df[serial_col].notna() & (df[serial_col].astype(str).str.strip() != "") & (df[serial_col].astype(str).str.lower() != serial_col.lower())]
     st.sidebar.info(f"📊 Using '{serial_col}' column for equipment counting")
 else:
-    st.sidebar.warning("⚠️ Serial number column not found. Using all rows with Equipment _Type.")
+    st.sidebar.warning("⚠️ Serial number column not found. Using all rows with Equipment_Type.")
 
 # Clean ownership data and remove header-like entries
 df.loc[:, "Ownership"] = df["Ownership"].astype(str).str.strip().str.title()
@@ -301,7 +301,7 @@ for _, row in filtered_df.iterrows():
     for doc, status_col in zip(exp_date_columns, status_columns):
         if doc in filtered_df.columns and status_col in filtered_df.columns:
             detail = {
-                "Equipment _Type": row["Equipment _Type"],
+                "Equipment_Type": row["Equipment_Type"],
                 "Ownership": row["Ownership"],
                 "Company Name": row["Company Name"],
                 "Registration_Number": row["Registration_Number"],
@@ -427,14 +427,14 @@ with col1:
         st.info("No critical documents found.")
 
 with col2:
-    st.subheader("🏗️ Equipment _Type Distribution")
+    st.subheader("🏗️ Equipment_Type Distribution")
     if not filtered_df.empty:
         equipment_counts = filtered_df["Equipment_Type"].value_counts().reset_index()
         equipment_counts.columns = ["Equipment_Type", "Count"]
         
         fig_equipment = px.bar(
             equipment_counts,
-            x="Equipment _Type",
+            x="Equipment_Type",
             y="Count",
             text="Count",
             title="Equipment Distribution",
