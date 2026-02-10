@@ -73,7 +73,7 @@ st.sidebar.markdown(
 # -------------------------------------------------
 TEXT_COLUMNS = [
     "Ownership",
-    "Equipment_Type",
+    "Equipment _Type",
     "Registration_Number",
     "Location",
     "Company Name"
@@ -113,18 +113,18 @@ selected_registration = st.sidebar.selectbox(
 )
 
 # -------------------------------------------------
-# Equipment_Type FILTER
+# Equipment _Type FILTER
 # -------------------------------------------------
-equipment_types = sorted(
-    df["Equipment_Type"]
+Equipment _Types = sorted(
+    df["Equipment _Type"]
     .dropna()
     .unique()
 )
 
 selected_equipment = st.sidebar.selectbox(
-    "⚙️ Equipment_Type:",
-    ["All"] + equipment_types,
-    help="Filter by Equipment_Type"
+    "⚙️ Equipment _Type:",
+    ["All"] + Equipment _Types,
+    help="Filter by Equipment _Type"
 )
 
 # -------------------------------------------------
@@ -160,7 +160,7 @@ if selected_registration != "All":
 
 if selected_equipment != "All":
     filtered_df = filtered_df[
-        filtered_df["Equipment_Type"] == selected_equipment
+        filtered_df["Equipment _Type"] == selected_equipment
     ]
 
 if selected_location != "All" and "Location" in filtered_df.columns:
@@ -188,9 +188,9 @@ st.sidebar.markdown("• Detailed expiry management")
 original_df = df.copy()
 
 # Clean the data first - remove header rows and invalid entries
-df = df.dropna(subset=["Equipment_Type"])
-df = df[df["Equipment_Type"].astype(str).str.strip() != ""]
-df = df[df["Equipment_Type"].astype(str).str.lower() != "Equipment_Type"]
+df = df.dropna(subset=["Equipment _Type"])
+df = df[df["Equipment _Type"].astype(str).str.strip() != ""]
+df = df[df["Equipment _Type"].astype(str).str.lower() != "Equipment _Type"]
 
 # Try to find the serial number column
 serial_col = None
@@ -205,7 +205,7 @@ if serial_col:
     df = df[df[serial_col].notna() & (df[serial_col].astype(str).str.strip() != "") & (df[serial_col].astype(str).str.lower() != serial_col.lower())]
     st.sidebar.info(f"📊 Using '{serial_col}' column for equipment counting")
 else:
-    st.sidebar.warning("⚠️ Serial number column not found. Using all rows with Equipment_Type.")
+    st.sidebar.warning("⚠️ Serial number column not found. Using all rows with Equipment _Type.")
 
 # Clean ownership data and remove header-like entries
 df.loc[:, "Ownership"] = df["Ownership"].astype(str).str.strip().str.title()
@@ -220,7 +220,7 @@ if selected_registration != "All":
     filtered_df = filtered_df[filtered_df["Registration_Number"] == selected_registration]
 
 if selected_equipment != "All":
-    filtered_df = filtered_df[filtered_df["Equipment_Type"] == selected_equipment]
+    filtered_df = filtered_df[filtered_df["Equipment _Type"] == selected_equipment]
 
 # =====================
 # DATE HANDLING & STATUS CLASSIFICATION  
@@ -301,7 +301,7 @@ for _, row in filtered_df.iterrows():
     for doc, status_col in zip(exp_date_columns, status_columns):
         if doc in filtered_df.columns and status_col in filtered_df.columns:
             detail = {
-                "Equipment_Type": row["Equipment_Type"],
+                "Equipment _Type": row["Equipment _Type"],
                 "Ownership": row["Ownership"],
                 "Company Name": row["Company Name"],
                 "Registration_Number": row["Registration_Number"],
@@ -427,14 +427,14 @@ with col1:
         st.info("No critical documents found.")
 
 with col2:
-    st.subheader("🏗️ Equipment_Type Distribution")
+    st.subheader("🏗️ Equipment _Type Distribution")
     if not filtered_df.empty:
-        equipment_counts = filtered_df["Equipment_Type"].value_counts().reset_index()
-        equipment_counts.columns = ["Equipment_Type", "Count"]
+        equipment_counts = filtered_df["Equipment _Type"].value_counts().reset_index()
+        equipment_counts.columns = ["Equipment _Type", "Count"]
         
         fig_equipment = px.bar(
             equipment_counts,
-            x="Equipment_Type",
+            x="Equipment _Type",
             y="Count",
             text="Count",
             title="Equipment Distribution",
