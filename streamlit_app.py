@@ -306,7 +306,7 @@ for _, row in filtered_df.iterrows():
             detail = {
                 "Equipment_Type": row["Equipment_Type"],
                 "Ownership": row["Ownership"],
-                "Company Name": row["Company Name"],
+                "Company_Name": row["Company_Name"],
                 "Registration_Number": row["Registration_Number"],
                 "Document Type": doc,
                 "Expiry Date": row[doc]
