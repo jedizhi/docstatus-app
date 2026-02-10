@@ -74,7 +74,7 @@ st.sidebar.markdown(
 TEXT_COLUMNS = [
     "Ownership",
     "Equipment Type",
-    "Registration Number",
+    "Registration_Number",
     "Location",
     "Company Name"
 ]
@@ -98,18 +98,18 @@ ownership = st.sidebar.radio(
 )
 
 # -------------------------------------------------
-# REGISTRATION NUMBER FILTER
+# Registration_Number FILTER
 # -------------------------------------------------
 registration_numbers = sorted(
-    df["Registration Number"]
+    df["Registration_Number"]
     .dropna()
     .unique()
 )
 
 selected_registration = st.sidebar.selectbox(
-    "🔍 Registration Number:",
+    "🔍 Registration_Number:",
     ["All"] + registration_numbers,
-    help="Filter by specific registration number"
+    help="Filter by specific Registration_Number"
 )
 
 # -------------------------------------------------
@@ -155,7 +155,7 @@ if ownership != "All":
 
 if selected_registration != "All":
     filtered_df = filtered_df[
-        filtered_df["Registration Number"] == selected_registration
+        filtered_df["Registration_Number"] == selected_registration
     ]
 
 if selected_equipment != "All":
@@ -217,7 +217,7 @@ if ownership != "All":
     filtered_df = filtered_df[filtered_df["Ownership"] == ownership]
 
 if selected_registration != "All":
-    filtered_df = filtered_df[filtered_df["Registration Number"] == selected_registration]
+    filtered_df = filtered_df[filtered_df["Registration_Number"] == selected_registration]
 
 if selected_equipment != "All":
     filtered_df = filtered_df[filtered_df["Equipment Type"] == selected_equipment]
@@ -304,7 +304,7 @@ for _, row in filtered_df.iterrows():
                 "Equipment Type": row["Equipment Type"],
                 "Ownership": row["Ownership"],
                 "Company Name": row["Company Name"],
-                "Registration Number": row["Registration Number"],
+                "Registration_Number": row["Registration_Number"],
                 "Document Type": doc,
                 "Expiry Date": row[doc]
             }
@@ -617,7 +617,7 @@ with tab3:
                         "Date": row["Expiry Date"],
                         "Status": "Expired",
                         "Document Type": row["Document Type"],
-                        "Registration": row["Registration Number"]
+                        "Registration": row["Registration_Number"]
                     })
         
         if not renewal_df.empty:
@@ -627,7 +627,7 @@ with tab3:
                         "Date": row["Expiry Date"],
                         "Status": "For Renewal",
                         "Document Type": row["Document Type"],
-                        "Registration": row["Registration Number"]
+                        "Registration": row["Registration_Number"]
                     })
         
         if timeline_data:
