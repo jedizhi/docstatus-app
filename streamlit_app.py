@@ -73,7 +73,7 @@ st.sidebar.markdown(
 # -------------------------------------------------
 TEXT_COLUMNS = [
     "Ownership",
-    "Equipment _Type",
+    "Equipment_Type",
     "Registration_Number",
     "Location",
     "Company Name"
@@ -116,15 +116,15 @@ selected_registration = st.sidebar.selectbox(
 # Equipment _Type FILTER
 # -------------------------------------------------
 Equipment _Types = sorted(
-    df["Equipment _Type"]
+    df["Equipment_Type"]
     .dropna()
     .unique()
 )
 
 selected_equipment = st.sidebar.selectbox(
-    "⚙️ Equipment _Type:",
-    ["All"] + Equipment _Types,
-    help="Filter by Equipment _Type"
+    "⚙️ Equipment_Type:",
+    ["All"] + Equipment_Types,
+    help="Filter by Equipment_Type"
 )
 
 # -------------------------------------------------
@@ -160,7 +160,7 @@ if selected_registration != "All":
 
 if selected_equipment != "All":
     filtered_df = filtered_df[
-        filtered_df["Equipment _Type"] == selected_equipment
+        filtered_df["Equipment_Type"] == selected_equipment
     ]
 
 if selected_location != "All" and "Location" in filtered_df.columns:
@@ -188,7 +188,7 @@ st.sidebar.markdown("• Detailed expiry management")
 original_df = df.copy()
 
 # Clean the data first - remove header rows and invalid entries
-df = df.dropna(subset=["Equipment _Type"])
+df = df.dropna(subset=["Equipment_Type"])
 df = df[df["Equipment _Type"].astype(str).str.strip() != ""]
 df = df[df["Equipment _Type"].astype(str).str.lower() != "Equipment _Type"]
 
@@ -220,7 +220,7 @@ if selected_registration != "All":
     filtered_df = filtered_df[filtered_df["Registration_Number"] == selected_registration]
 
 if selected_equipment != "All":
-    filtered_df = filtered_df[filtered_df["Equipment _Type"] == selected_equipment]
+    filtered_df = filtered_df[filtered_df["Equipment_Type"] == selected_equipment]
 
 # =====================
 # DATE HANDLING & STATUS CLASSIFICATION  
