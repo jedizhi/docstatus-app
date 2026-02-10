@@ -163,7 +163,7 @@ if selected_equipment != "All":
         filtered_df["Equipment_Type"] == selected_equipment
     ]
 
-if selected_location != "All" and "Location" in filtered_df.columns:
+if selected_location != "All":# and "Location" in filtered_df.columns:
     filtered_df = filtered_df[
         filtered_df["Location"] == selected_location
     ]
@@ -222,13 +222,16 @@ if selected_registration != "All":
 if selected_equipment != "All":
     filtered_df = filtered_df[filtered_df["Equipment_Type"] == selected_equipment]
 
+if selected_location != "All":
+    filtered_df = filtered_df[filtered_df["Location"] == selected_location]
+
 # =====================
 # DATE HANDLING & STATUS CLASSIFICATION  
 # =====================
 exp_date_columns = [
-    "Registration Expiry", "MVPI Expiry", "Equipment Insurance Exp", 
-    "Third Party Expiry", "License Expiry", 
-    "Cert Expiry", "Medical Insurance Expiry", "Fitness Expiry"
+    "Registration_Expiry", "MVPI_Expiry", "Equipment_Insurance_Expiry", 
+    "Third_Party_Expiry", "License_Expiry", 
+    "Cert_Expiry", "Medical_Insurance_Expiry", "Fitness_Expiry"
 ]
 
 # First, clean N/A and NA values before datetime conversion
