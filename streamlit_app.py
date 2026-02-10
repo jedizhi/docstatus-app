@@ -115,7 +115,7 @@ selected_registration = st.sidebar.selectbox(
 # -------------------------------------------------
 # Equipment _Type FILTER
 # -------------------------------------------------
-Equipment_Types = sorted(
+Equipment_Type = sorted(
     df["Equipment_Type"]
     .dropna()
     .unique()
@@ -123,7 +123,7 @@ Equipment_Types = sorted(
 
 selected_equipment = st.sidebar.selectbox(
     "⚙️ Equipment_Type:",
-    ["All"] + Equipment_Types,
+    ["All"] + Equipment_Type,
     help="Filter by Equipment_Type"
 )
 
