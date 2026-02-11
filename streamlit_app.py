@@ -190,7 +190,7 @@ original_df = df.copy()
 # Clean the data first - remove header rows and invalid entries
 df = df.dropna(subset=["Equipment_Type"])
 df = df[df["Equipment_Type"].astype(str).str.strip() != ""]
-df = df[df["Equipment_Type"].astype(str).str.lower() != "Equipment_Type"]
+df = df[df["Equipment_Type"].astype(str).str.upper() != "Equipment_Type"]
 
 # Try to find the serial number column
 serial_col = None
@@ -202,14 +202,14 @@ for col in possible_serial_cols:
         break
 
 if serial_col:
-    df = df[df[serial_col].notna() & (df[serial_col].astype(str).str.strip() != "") & (df[serial_col].astype(str).str.lower() != serial_col.lower())]
+    df = df[df[serial_col].notna() & (df[serial_col].astype(str).str.strip() != "") & (df[serial_col].astype(str).str.upper() != serial_col.lower())]
     st.sidebar.info(f"📊 Using '{serial_col}' column for equipment counting")
 else:
     st.sidebar.warning("⚠️ Serial number column not found. Using all rows with Equipment_Type.")
 
 # Clean ownership data and remove header-like entries
 df.loc[:, "Ownership"] = df["Ownership"].astype(str).str.strip().str.title()
-df = df[df["Ownership"].fillna("").str.lower() != "ownership"]
+df = df[df["Ownership"].fillna("").str.upper() != "ownership"]
 
 filtered_df = df.copy()
 
