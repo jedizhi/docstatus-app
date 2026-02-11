@@ -202,7 +202,7 @@ for col in possible_serial_cols:
         break
 
 if serial_col:
-    df = df[df[serial_col].notna() & (df[serial_col].astype(str).str.strip() != "") & (df[serial_col].astype(str).str.upper() != serial_col.lower())]
+    df = df[df[serial_col].notna() & (df[serial_col].astype(str).str.strip() != "") & (df[serial_col].astype(str).str.upper() != serial_col.upper())]
     st.sidebar.info(f"📊 Using '{serial_col}' column for equipment counting")
 else:
     st.sidebar.warning("⚠️ Serial number column not found. Using all rows with Equipment_Type.")
