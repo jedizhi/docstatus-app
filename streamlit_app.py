@@ -401,7 +401,7 @@ with col1:
         if expired_count > 0:
             status_data["Status"].append("Expired")
             status_data["Count"].append(expired_count)
-            status_data["Color"].append("#f39c12")
+            status_data["Color"].append("#fa0202")
         
         if renewal_count > 0:
             status_data["Status"].append("For Renewal")
