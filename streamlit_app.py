@@ -545,8 +545,8 @@ col1 = st.columns(1)
 with col1[0]:
     st.subheader("⏳ Expiring Today's Documents")
     st.markdown(f"Total Expiring Today Documents (with placeholder date {today}): **{today}**")
-    if not today_df.empty:
-        today_display = today_df.copy()
+    if not expiring_today_df.empty:
+        today_display = expiring_today_df.copy()
         today_display["Expiry Date"] = pd.to_datetime(today_display["Expiry Date"], errors="coerce").dt.strftime("%b-%d-%Y")
         today_display.index = today_display.index + 1
         with st.expander(f"📋 View {len(expiring_today_df)} Expiring Today Document Details"):
