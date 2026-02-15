@@ -241,12 +241,12 @@ for col in exp_date_columns:
         filtered_df[col] = pd.to_datetime(filtered_df[col], errors="coerce")
 
 today = pd.to_datetime(datetime.today().date())
-#pending_target_date = pd.to_datetime("2024-01-01").date()  # Use just the date part
+expiring_today = pd.to_datetime('today').date()  # Use just the date part
 
 def classify_date(expiry_date):
     if pd.isna(expiry_date):
         return "No Date"
-    elif expiry_date.date() == today:  # Compare date parts only
+    elif expiry_date.date() == expiring_today:  # Compare date parts only
         return "Expiring Today"
     elif expiry_date < today:
         return "Expired"
@@ -380,7 +380,7 @@ with col4:
         value=today_count,
         delta=f"2.6%",
         delta_color="off",
-        help="Total documents with placeholder dates 1-Jan-2024"
+        help="Total documents expiring Today"
     )
 
 st.markdown("---")
