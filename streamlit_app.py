@@ -10,7 +10,7 @@ from streamlit_gsheets import GSheetsConnection
 # PAGE CONFIG
 # =====================
 st.set_page_config(
-    page_title="Heavy Equipment/Vehicles Document Expiry Dashboard",
+    page_title="JGCP Document Expiry Dashboard",
     page_icon="📆",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -270,7 +270,7 @@ st.sidebar.write(f"Debug - Target date type: {type(expiring_today)}")
 # =====================
 # MAIN DASHBOARD
 # =====================
-st.markdown('<div class="main-header">📆 JGCP-HE Document Expiry Status - PH III</div>', unsafe_allow_html=True)
+st.markdown('<div class="main-header">📆 Heavy Equipment/Vehicles Document Expiry Status - PH III</div>', unsafe_allow_html=True)
 
 # =====================
 # BUILD DETAILED LISTS AND COUNT DOCUMENTS CONSISTENTLY
