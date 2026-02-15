@@ -398,7 +398,7 @@ with col1:
             "Color": []
         }
         
-        if expired_count == True:
+        if expired_count > 0:
             status_data["Status"].append("Expired")
             status_data["Count"].append(expired_count)
             status_data["Color"].append("#fae102")
