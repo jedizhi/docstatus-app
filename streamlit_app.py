@@ -600,7 +600,7 @@ with tab2:
                     "Expired": doc_expired,
                     "For Renewal": doc_renewal,
                     "Expiring Today": doc_expiring_today,
-                    "Total Critical": doc_expired + doc_renewal + doc_expringn_today
+                    "Total Critical": doc_expired + doc_renewal + doc_expiring_today
                 })
         
         doc_summary_df = pd.DataFrame(doc_summary)
