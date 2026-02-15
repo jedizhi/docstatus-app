@@ -104,6 +104,7 @@ registration_numbers = sorted(
     df["Registration_Number"]
     .dropna()
     .unique()
+    .upper()
 )
 
 selected_registration = st.sidebar.selectbox(
