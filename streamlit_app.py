@@ -543,14 +543,14 @@ with col2:
 st.markdown("---")
 col1 = st.columns(1)
 with col1[0]:
-    st.subheader("⏳ Expiring Today's Documents with Placeholder Dates")
-    st.markdown(f"Total Expiring Today Documents (with placeholder date {today}): **{today_count}**")
-    if not today_df.empty:
-        today_display = today_df.copy()
-        today_display["Expiry Date"] = pd.to_datetime(today_display["Expiry Date"], errors="coerce").dt.strftime("%b-%d-%Y")
-        today_display.index = today_display.index + 1
-        with st.expander(f"📋 View {len(today_df)} Expiring Today Document Details"):
-            st.dataframe(today_display, use_container_width=True)
+    st.subheader("⏳ Expiring Today's Documents")
+    st.markdown(f"Total Expiring Today Documents (with placeholder date {expiring_today}): **{expiring_today_count}**")
+    if not expiring_today_df.empty:
+        expiring_today_display = expring_today_df.copy()
+        expiring_today_display["Expiry Date"] = pd.to_datetime(today_display["Expiry Date"], errors="coerce").dt.strftime("%b-%d-%Y")
+        expiring_today_display.index = expiring_today_display.index + 1
+        with st.expander(f"📋 View {len(expiring_today_df)} Expiring Today Document Details"):
+            st.dataframe(expiring_today_display, use_container_width=True)
     else:
         st.success("🎉 No documents expiring today!")
 
@@ -569,7 +569,7 @@ with tab1:
         for owner in filtered_df["Ownership"].unique():
             owner_expired = len(expired_df[expired_df["Ownership"] == owner]) if not expired_df.empty else 0
             owner_renewal = len(renewal_df[renewal_df["Ownership"] == owner]) if not renewal_df.empty else 0
-            owner_today = len(today_df[today_df["Ownership"] == owner]) if not today_df.empty else 0
+            owner_expiring_today = len(expiring_today_df[expiring_today_df["Ownership"] == owner]) if not expiring_today_df.empty else 0
             owner_equipment = len(filtered_df[filtered_df["Ownership"] == owner])
             
             ownership_summary.append({
@@ -577,7 +577,7 @@ with tab1:
                 "Total Equipment": owner_equipment,
                 "Expired Documents": owner_expired,
                 "Renewal Documents": owner_renewal,
-                "Expiring Today Documents": owner_today
+                "Expiring Today Documents": owner_expiring_today
             })
         
         ownership_df = pd.DataFrame(ownership_summary)
@@ -593,14 +593,14 @@ with tab2:
             if doc_type in filtered_df.columns:
                 doc_expired = len(expired_df[expired_df["Document Type"] == doc_type]) if not expired_df.empty else 0
                 doc_renewal = len(renewal_df[renewal_df["Document Type"] == doc_type]) if not renewal_df.empty else 0
-                doc_today = len(today_df[today_df["Document Type"] == doc_type]) if not today_df.empty else 0
+                doc_expiring_today = len(expiring_today_df[expiring_today_df["Document Type"] == doc_type]) if not expiring_today_df.empty else 0
                 
                 doc_summary.append({
                     "Document Type": doc_type,
                     "Expired": doc_expired,
                     "For Renewal": doc_renewal,
-                    "Expiring Today": doc_today,
-                    "Total Critical": doc_expired + doc_renewal + doc_today
+                    "Expiring Today": doc_expiring_today,
+                    "Total Critical": doc_expired + doc_renewal + doc_expringn_today
                 })
         
         doc_summary_df = pd.DataFrame(doc_summary)
