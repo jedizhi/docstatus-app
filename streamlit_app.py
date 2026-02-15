@@ -10,7 +10,7 @@ from streamlit_gsheets import GSheetsConnection
 # PAGE CONFIG
 # =====================
 st.set_page_config(
-    page_title="JGCP-HE Document Expiry Dashboard",
+    page_title="Heavy Equipment/Vehicles Document Expiry Dashboard",
     page_icon="📆",
     layout="wide",
     initial_sidebar_state="expanded"
