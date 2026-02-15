@@ -401,17 +401,17 @@ with col1:
         if expired_count > 0:
             status_data["Status"].append("Expired")
             status_data["Count"].append(expired_count)
-            status_data["Color"].append("#e74c3c")
+            status_data["Color"].append("#f39c12")
         
         if renewal_count > 0:
             status_data["Status"].append("For Renewal")
             status_data["Count"].append(renewal_count)
-            status_data["Color"].append("#f39c12")
+            status_data["Color"].append("#fae102")
         
         if expiring_today_count > 0:
             status_data["Status"].append("Expiring Today")
             status_data["Count"].append(expiring_today_count)
-            status_data["Color"].append("#95a5a6")
+            status_data["Color"].append("#fa7602")
         
         fig_status = px.pie(
             values=status_data["Count"],
