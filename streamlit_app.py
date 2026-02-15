@@ -544,7 +544,7 @@ st.markdown("---")
 col1 = st.columns(1)
 with col1[0]:
     st.subheader("⏳ Expiring Today's Documents")
-    st.markdown(f"Total Expiring Today Documents (with placeholder date {today}): **{count}**")
+    st.markdown(f"Total Expiring Today Documents (with placeholder date {today}): **{today}**")
     if not today_df.empty:
         today_display = today_df.copy()
         today_display["Expiry Date"] = pd.to_datetime(today_display["Expiry Date"], errors="coerce").dt.strftime("%b-%d-%Y")
