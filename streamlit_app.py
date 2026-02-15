@@ -401,12 +401,12 @@ with col1:
         if expired_count > 0:
             status_data["Status"].append("Expired")
             status_data["Count"].append(expired_count)
-            status_data["Color"].append("#fa0202")
+            status_data["Color"].append("#fae102")
         
         if renewal_count > 0:
             status_data["Status"].append("For Renewal")
             status_data["Count"].append(renewal_count)
-            status_data["Color"].append("#fae102")
+            status_data["Color"].append("#fa0202")
         
         if expiring_today_count > 0:
             status_data["Status"].append("Expiring Today")
