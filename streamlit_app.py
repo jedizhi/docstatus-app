@@ -241,13 +241,13 @@ for col in exp_date_columns:
         filtered_df[col] = pd.to_datetime(filtered_df[col], errors="coerce")
 
 today = pd.to_datetime(datetime.today().date())
-pending_target_date = pd.to_datetime("2024-01-01").date()  # Use just the date part
+#pending_target_date = pd.to_datetime("2024-01-01").date()  # Use just the date part
 
 def classify_date(expiry_date):
     if pd.isna(expiry_date):
         return "No Date"
-    elif expiry_date.date() == pending_target_date:  # Compare date parts only
-        return "Pending"
+    elif expiry_date.date() == today:  # Compare date parts only
+        return "Expiring Today"
     elif expiry_date < today:
         return "Expired"
     elif expiry_date <= today + timedelta(days=15):
@@ -263,8 +263,8 @@ for col in exp_date_columns:
 status_columns = [f"{col}_Status" for col in exp_date_columns if col in filtered_df.columns]
 
 
-st.sidebar.write(f"Debug - Target date: {pending_target_date}")
-st.sidebar.write(f"Debug - Target date type: {type(pending_target_date)}")
+st.sidebar.write(f"Debug - Target date: {today}")
+st.sidebar.write(f"Debug - Target date type: {type(today)}")
 
 
 # =====================
@@ -277,27 +277,27 @@ st.markdown('<div class="main-header">📆 JGCP-HE Document Expiry Status - PH I
 # =====================
 expired_details = []
 renewal_details = []
-pending_details = []
+today_details = []
 
 # Counters for total documents in each category
 expired_count = 0
 renewal_count = 0
-pending_count = 0
+today_count = 0
 
 # Debug section - FIXED to use date comparison
 st.sidebar.write("Debug - Document counts by column:")
-pending_by_column = {}
+today_by_column = {}
 
 for col in exp_date_columns:
     if col in filtered_df.columns:
         # FIX: Compare date parts only, handle NaT values properly
-        pending_count_col = 0
+        today_count_col = 0
         for _, row in filtered_df.iterrows():
-            if pd.notna(row[col]) and row[col].date() == pending_target_date:
-                pending_count_col += 1
+            if pd.notna(row[col]) and row[col].date() == today:
+                today_count_col += 1
         
-        pending_by_column[col] = pending_count_col
-        st.sidebar.write(f"• {col}: {pending_count_col} pending")
+        today_by_column[col] = today_count_col
+        st.sidebar.write(f"• {col}: {today_count_col} expiring today")
 
 # Process all columns and count documents by status
 for _, row in filtered_df.iterrows():
@@ -319,24 +319,24 @@ for _, row in filtered_df.iterrows():
             elif row[status_col] == "For Renewal":
                 renewal_details.append(detail)
                 renewal_count += 1
-            elif row[status_col] == "Pending":
-                pending_details.append(detail)
-                pending_count += 1
+            elif row[status_col] == "Expiring Today":
+                today_details.append(detail)
+                today_count += 1
 
 # Convert to DataFrames
 expired_df = pd.DataFrame(expired_details)
 renewal_df = pd.DataFrame(renewal_details)
-pending_df = pd.DataFrame(pending_details)
+today_df = pd.DataFrame(today_details)
 
 st.sidebar.write("---")
 st.sidebar.write("📊 **Document Count Summary:**")
 st.sidebar.write(f"• Expired Documents: {expired_count}")
 st.sidebar.write(f"• Renewal Documents: {renewal_count}")
-st.sidebar.write(f"• Pending Documents: {pending_count}")
-st.sidebar.write(f"• Total Critical Documents: {expired_count + renewal_count + pending_count}")
+st.sidebar.write(f"• Today Documents: {today_count}")
+st.sidebar.write(f"• Total Critical Documents: {expired_count + renewal_count + today_count}")
 
 # Verification check
-total_from_columns = sum(pending_by_column.values())
+total_from_columns = sum(today_by_column.values())
 st.sidebar.write(f"• Verification - Column sum: {total_from_columns}")
 
 # =====================
@@ -376,8 +376,8 @@ with col3:
 
 with col4:
     st.metric(
-        label="⏳ Pending",
-        value=pending_count,
+        label="⏳ Expiring Today",
+        value=today_count,
         delta=f"2.6%",
         delta_color="off",
         help="Total documents with placeholder dates 1-Jan-2024"
@@ -391,7 +391,7 @@ col1, col2, col3 = st.columns(3)
 
 with col1:
     st.subheader("📈 Document Status Distribution")
-    if expired_count > 0 or renewal_count > 0 or pending_count > 0:
+    if expired_count > 0 or renewal_count > 0 or today_count > 0:
         status_data = {
             "Status": [],
             "Count": [],
@@ -408,9 +408,9 @@ with col1:
             status_data["Count"].append(renewal_count)
             status_data["Color"].append("#f39c12")
         
-        if pending_count > 0:
-            status_data["Status"].append("Pending")
-            status_data["Count"].append(pending_count)
+        if today_count > 0:
+            status_data["Status"].append("Expiring Today")
+            status_data["Count"].append(today_count)
             status_data["Color"].append("#95a5a6")
         
         fig_status = px.pie(
@@ -538,21 +538,21 @@ with col2:
         st.success("🎉 No documents for renewal!")
 
 # =====================
-# PENDING DOCUMENTS SECTION
+# EXPIRING TODAY DOCUMENTS SECTION
 # =====================
 st.markdown("---")
 col1 = st.columns(1)
 with col1[0]:
-    st.subheader("⏳ Pending Documents with Placeholder Dates")
-    st.markdown(f"Total Pending Documents (with placeholder date {pending_target_date}): **{pending_count}**")
-    if not pending_df.empty:
-        pending_display = pending_df.copy()
-        pending_display["Expiry Date"] = pd.to_datetime(pending_display["Expiry Date"], errors="coerce").dt.strftime("%b-%d-%Y")
-        pending_display.index = pending_display.index + 1
-        with st.expander(f"📋 View {len(pending_df)} Pending Document Details"):
-            st.dataframe(pending_display, use_container_width=True)
+    st.subheader("⏳ Expiring Today's Documents with Placeholder Dates")
+    st.markdown(f"Total Expiring Today Documents (with placeholder date {today}): **{today_count}**")
+    if not today_df.empty:
+        today_display = today_df.copy()
+        today_display["Expiry Date"] = pd.to_datetime(today_display["Expiry Date"], errors="coerce").dt.strftime("%b-%d-%Y")
+        today_display.index = today_display.index + 1
+        with st.expander(f"📋 View {len(today_df)} Expiring Today Document Details"):
+            st.dataframe(today_display, use_container_width=True)
     else:
-        st.success("🎉 No pending documents!")
+        st.success("🎉 No documents expiring today!")
 
 # =====================
 # ADDITIONAL INSIGHTS
@@ -569,7 +569,7 @@ with tab1:
         for owner in filtered_df["Ownership"].unique():
             owner_expired = len(expired_df[expired_df["Ownership"] == owner]) if not expired_df.empty else 0
             owner_renewal = len(renewal_df[renewal_df["Ownership"] == owner]) if not renewal_df.empty else 0
-            owner_pending = len(pending_df[pending_df["Ownership"] == owner]) if not pending_df.empty else 0
+            owner_today = len(today_df[today_df["Ownership"] == owner]) if not today_df.empty else 0
             owner_equipment = len(filtered_df[filtered_df["Ownership"] == owner])
             
             ownership_summary.append({
@@ -577,7 +577,7 @@ with tab1:
                 "Total Equipment": owner_equipment,
                 "Expired Documents": owner_expired,
                 "Renewal Documents": owner_renewal,
-                "Pending Documents": owner_pending
+                "Expiring Today Documents": owner_today
             })
         
         ownership_df = pd.DataFrame(ownership_summary)
@@ -593,14 +593,14 @@ with tab2:
             if doc_type in filtered_df.columns:
                 doc_expired = len(expired_df[expired_df["Document Type"] == doc_type]) if not expired_df.empty else 0
                 doc_renewal = len(renewal_df[renewal_df["Document Type"] == doc_type]) if not renewal_df.empty else 0
-                doc_pending = len(pending_df[pending_df["Document Type"] == doc_type]) if not pending_df.empty else 0
+                doc_today = len(today_df[today_df["Document Type"] == doc_type]) if not today_df.empty else 0
                 
                 doc_summary.append({
                     "Document Type": doc_type,
                     "Expired": doc_expired,
                     "For Renewal": doc_renewal,
-                    "Pending": doc_pending,
-                    "Total Critical": doc_expired + doc_renewal + doc_pending
+                    "Expiring Today": doc_today,
+                    "Total Critical": doc_expired + doc_renewal + doc_today
                 })
         
         doc_summary_df = pd.DataFrame(doc_summary)
