@@ -85,7 +85,7 @@ for col in TEXT_COLUMNS:
             df[col]
             .astype(str)
             .str.strip()
-            .str.title()
+            #.str.title()
         )
 
 # -------------------------------------------------
@@ -104,7 +104,6 @@ registration_numbers = sorted(
     df["Registration_Number"]
     .dropna()
     .unique()
-    .upper()
 )
 
 selected_registration = st.sidebar.selectbox(
