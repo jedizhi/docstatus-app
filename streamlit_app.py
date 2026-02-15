@@ -544,13 +544,13 @@ st.markdown("---")
 col1 = st.columns(1)
 with col1[0]:
     st.subheader("⏳ Expiring Today's Documents")
-    st.markdown(f"Total Expiring Today Documents (with placeholder date {expiring_today}): **{expiring_today_count}**")
-    if not expiring_today_df.empty:
-        expiring_today_display = expring_today_df.copy()
-        expiring_today_display["Expiry Date"] = pd.to_datetime(today_display["Expiry Date"], errors="coerce").dt.strftime("%b-%d-%Y")
-        expiring_today_display.index = expiring_today_display.index + 1
+    st.markdown(f"Total Expiring Today Documents (with placeholder date {today}): **{today_count}**")
+    if not today_df.empty:
+        today_display = today_df.copy()
+        today_display["Expiry Date"] = pd.to_datetime(today_display["Expiry Date"], errors="coerce").dt.strftime("%b-%d-%Y")
+        today_display.index = today_display.index + 1
         with st.expander(f"📋 View {len(expiring_today_df)} Expiring Today Document Details"):
-            st.dataframe(expiring_today_display, use_container_width=True)
+            st.dataframe(today_display, use_container_width=True)
     else:
         st.success("🎉 No documents expiring today!")
 
