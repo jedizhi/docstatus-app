@@ -263,8 +263,8 @@ for col in exp_date_columns:
 status_columns = [f"{col}_Status" for col in exp_date_columns if col in filtered_df.columns]
 
 
-st.sidebar.write(f"Debug - Target date: {today}")
-st.sidebar.write(f"Debug - Target date type: {type(today)}")
+st.sidebar.write(f"Debug - Target date: {expiring_today}")
+st.sidebar.write(f"Debug - Target date type: {type(expiring_today)}")
 
 
 # =====================
@@ -277,27 +277,27 @@ st.markdown('<div class="main-header">📆 JGCP-HE Document Expiry Status - PH I
 # =====================
 expired_details = []
 renewal_details = []
-today_details = []
+expiring_today_details = []
 
 # Counters for total documents in each category
 expired_count = 0
 renewal_count = 0
-today_count = 0
+expiring_today_count = 0
 
 # Debug section - FIXED to use date comparison
 st.sidebar.write("Debug - Document counts by column:")
-today_by_column = {}
+expiring_today_by_column = {}
 
 for col in exp_date_columns:
     if col in filtered_df.columns:
         # FIX: Compare date parts only, handle NaT values properly
-        today_count_col = 0
+        expiring_today_count_col = 0
         for _, row in filtered_df.iterrows():
-            if pd.notna(row[col]) and row[col].date() == today:
-                today_count_col += 1
+            if pd.notna(row[col]) and row[col].date() == expiring_today:
+                expiring_today_count_col += 1
         
-        today_by_column[col] = today_count_col
-        st.sidebar.write(f"• {col}: {today_count_col} expiring today")
+        expiring_today_by_column[col] = expiring_today_count_col
+        st.sidebar.write(f"• {col}: {expiring_today_count_col} expiring today")
 
 # Process all columns and count documents by status
 for _, row in filtered_df.iterrows():
@@ -320,23 +320,23 @@ for _, row in filtered_df.iterrows():
                 renewal_details.append(detail)
                 renewal_count += 1
             elif row[status_col] == "Expiring Today":
-                today_details.append(detail)
-                today_count += 1
+                expiring_today_details.append(detail)
+                expiring_today_count += 1
 
 # Convert to DataFrames
 expired_df = pd.DataFrame(expired_details)
 renewal_df = pd.DataFrame(renewal_details)
-today_df = pd.DataFrame(today_details)
+expiring_today_df = pd.DataFrame(expiring_today_details)
 
 st.sidebar.write("---")
 st.sidebar.write("📊 **Document Count Summary:**")
 st.sidebar.write(f"• Expired Documents: {expired_count}")
 st.sidebar.write(f"• Renewal Documents: {renewal_count}")
-st.sidebar.write(f"• Today Documents: {today_count}")
-st.sidebar.write(f"• Total Critical Documents: {expired_count + renewal_count + today_count}")
+st.sidebar.write(f"• Today Documents: {expiring_today_count}")
+st.sidebar.write(f"• Total Critical Documents: {expired_count + renewal_count + expiring_today_count}")
 
 # Verification check
-total_from_columns = sum(today_by_column.values())
+total_from_columns = sum(expiring_today_by_column.values())
 st.sidebar.write(f"• Verification - Column sum: {total_from_columns}")
 
 # =====================
@@ -377,7 +377,7 @@ with col3:
 with col4:
     st.metric(
         label="⏳ Expiring Today",
-        value=today_count,
+        value=expiring_today_count,
         delta=f"2.6%",
         delta_color="off",
         help="Total documents expiring Today"
@@ -391,7 +391,7 @@ col1, col2, col3 = st.columns(3)
 
 with col1:
     st.subheader("📈 Document Status Distribution")
-    if expired_count > 0 or renewal_count > 0 or today_count > 0:
+    if expired_count > 0 or renewal_count > 0 or expiring_today_count > 0:
         status_data = {
             "Status": [],
             "Count": [],
@@ -408,9 +408,9 @@ with col1:
             status_data["Count"].append(renewal_count)
             status_data["Color"].append("#f39c12")
         
-        if today_count > 0:
+        if expiring_today_count > 0:
             status_data["Status"].append("Expiring Today")
-            status_data["Count"].append(today_count)
+            status_data["Count"].append(expiring_today_count)
             status_data["Color"].append("#95a5a6")
         
         fig_status = px.pie(
