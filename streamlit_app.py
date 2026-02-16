@@ -159,7 +159,7 @@ else:
 
 selected_company = st.sidebar.selectbox(
     "📰 Company_Name:",
-    ["All"] + Company_Name,
+    ["All"] + company,
     help="Filter by Company_Name"
 )
 
