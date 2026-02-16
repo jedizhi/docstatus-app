@@ -145,6 +145,21 @@ selected_location = st.sidebar.selectbox(
     help="Filter by equipment location"
 )
 
+# -------------------------------------------------
+# Company Name FILTER
+# -------------------------------------------------
+Company_Name = sorted(
+    df["Company_Name"]
+    .dropna()
+    .unique()
+)
+
+selected_company = st.sidebar.selectbox(
+    "⚙️ Company_Name:",
+    ["All"] + Company_Name,
+    help="Filter by Company_Name"
+)
+
 # =====================
 # APPLY FILTERS
 # =====================
@@ -166,6 +181,10 @@ if selected_equipment != "All":
 if selected_location != "All":# and "Location" in filtered_df.columns:
     filtered_df = filtered_df[
         filtered_df["Location"] == selected_location
+    ]
+if selected_company != "All":# and "Company_Name" in filtered_df.columns:
+    filtered_df = filtered_df[
+        filtered_df["Company_Name"] == selected_company
     ]
 
 
