@@ -185,7 +185,7 @@ if selected_location != "All":# and "Location" in filtered_df.columns:
     filtered_df = filtered_df[
         filtered_df["Location"] == selected_location
     ]
-if selected_company != "All":# and "Company_Name" in filtered_df.columns:
+if selected_company != "All" and "Company_Name" in filtered_df.columns:
     filtered_df = filtered_df[
         filtered_df["Company_Name"] == selected_company
     ]
