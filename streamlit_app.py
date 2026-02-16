@@ -148,14 +148,17 @@ selected_location = st.sidebar.selectbox(
 # -------------------------------------------------
 # Company Name FILTER
 # -------------------------------------------------
-Company_Name = sorted(
-    df["Company_Name"]
-    .dropna()
-    .unique()
-)
+if "Company_Name" in df.columns:
+    company = sorted(
+        df["Company_Name"]
+        .dropna()
+        .unique()
+    )
+else:
+    company = []
 
 selected_company = st.sidebar.selectbox(
-    "⚙️ Company_Name:",
+    "📰 Company_Name:",
     ["All"] + Company_Name,
     help="Filter by Company_Name"
 )
