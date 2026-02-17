@@ -215,8 +215,8 @@ if filters_applied:
             "Equipment_Type",
             "Registration_Number",
             "Location",
-            "Company_Name",
-            "Ownership"  # ← change this to your preferred 5th column
+            "Company_Name"
+        
         ]
 
         # Only keep columns that exist
@@ -231,8 +231,8 @@ if filters_applied:
                 "Equipment_Type": "Equipment Type",
                 "Registration_Number": "Plate No.",
                 "Location": "Location",
-                "Company_Name": "Company",
-                "Ownership": "Ownership"
+                "Company_Name": "Company"
+           
             })
 
             st.sidebar.markdown("**Filtered Results**")
@@ -245,8 +245,7 @@ if filters_applied:
                     "Equipment Type": st.column_config.TextColumn("Equipment Type", width="medium"),
                     "Plate No.": st.column_config.TextColumn("Plate No.", width="small"),
                     "Location": st.column_config.TextColumn("Location", width="small"),
-                    "Company": st.column_config.TextColumn("Company", width="medium"),
-                    "Ownership": st.column_config.TextColumn("Ownership", width="small")
+                    "Company": st.column_config.TextColumn("Company", width="medium")                  
                 }
             )
         else:
