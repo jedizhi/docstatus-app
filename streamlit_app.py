@@ -196,6 +196,29 @@ if st.sidebar.button("🔄 Refresh Data", type="primary"):
 
 st.sidebar.markdown("---")
 st.sidebar.markdown("📊 **EQUIPMENT AND VEHICLE DETAILS**")
+
+# DISPLAY FILTERED ITEMS IN THE SIDEBAR SECTION
+
+if not filtered_df.empty:
+    sidebar_table = filtered_df[[
+        "Ownership" ,
+        "Company_Name",
+        "Equipment_Type",
+        "Registration_Number",
+        "Location",
+    ]].copy()
+
+    sidebar_table.insert(0, "No.", range(1, len(sidebar_table) + 1))
+
+    st.sidebar.markdown("**Selected / Filtered Items**")
+    st.sidebar.dataframe(
+        sidebar_table,
+        use_container_width=True,
+        hide_index=True
+    )
+else:
+    st.sidebar.info("No matching items")
+
 #st.sidebar.markdown("• Real-time document status tracking")
 #st.sidebar.markdown("• Interactive filtering options")
 #st.sidebar.markdown("• Visual status distribution")
