@@ -195,11 +195,11 @@ if st.sidebar.button("🔄 Refresh Data", type="primary"):
     st.rerun()
 
 st.sidebar.markdown("---")
-st.sidebar.markdown("📊 **Dashboard Features:**")
-st.sidebar.markdown("• Real-time document status tracking")
-st.sidebar.markdown("• Interactive filtering options")
-st.sidebar.markdown("• Visual status distribution")
-st.sidebar.markdown("• Detailed expiry management")
+st.sidebar.markdown("📊 **EQUIPMENT AND VEHICLE DETAILS**")
+#st.sidebar.markdown("• Real-time document status tracking")
+#st.sidebar.markdown("• Interactive filtering options")
+#st.sidebar.markdown("• Visual status distribution")
+#st.sidebar.markdown("• Detailed expiry management")
 
 # =====================
 # APPLY FILTERS
@@ -213,19 +213,19 @@ df = df[df["Equipment_Type"].astype(str).str.strip() != ""]
 df = df[df["Equipment_Type"].astype(str).str.upper() != "Equipment_Type"]
 
 # Try to find the serial number column
-serial_col = None
-possible_serial_cols = ["S.NO.", "S.No.", "S.No", "Serial No.", "Serial No", "SNo", "Index", "No.", "S. No."]
+#serial_col = None
+#possible_serial_cols = ["S.NO.", "S.No.", "S.No", "Serial No.", "Serial No", "SNo", "Index", "No.", "S. No."]
 
-for col in possible_serial_cols:
-    if col in df.columns:
-        serial_col = col
-        break
+#for col in possible_serial_cols:
+#    if col in df.columns:
+#        serial_col = col
+#        break
 
-if serial_col:
-    df = df[df[serial_col].notna() & (df[serial_col].astype(str).str.strip() != "") & (df[serial_col].astype(str).str.upper() != serial_col.upper())]
-    st.sidebar.info(f"📊 Using '{serial_col}' column for equipment counting")
-else:
-    st.sidebar.warning("⚠️ Serial number column not found. Using all rows with Equipment_Type.")
+#if serial_col:
+#    df = df[df[serial_col].notna() & (df[serial_col].astype(str).str.strip() != "") & (df[serial_col].astype(str).str.upper() != serial_col.upper())]
+#    st.sidebar.info(f"📊 Using '{serial_col}' column for equipment counting")
+#else:
+#    st.sidebar.warning("⚠️ Serial number column not found. Using all rows with Equipment_Type.")
 
 # Clean ownership data and remove header-like entries
 df.loc[:, "Ownership"] = df["Ownership"].astype(str).str.strip().str.title()
