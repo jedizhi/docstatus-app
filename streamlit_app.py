@@ -308,19 +308,19 @@ renewal_count = 0
 expiring_today_count = 0
 
 # Debug section - FIXED to use date comparison
-st.sidebar.write("Debug - Document counts by column:")
-expiring_today_by_column = {}
+#st.sidebar.write("Debug - Document counts by column:")
+#expiring_today_by_column = {}
 
-for col in exp_date_columns:
-    if col in filtered_df.columns:
-        # FIX: Compare date parts only, handle NaT values properly
-        expiring_today_count_col = 0
-        for _, row in filtered_df.iterrows():
-            if pd.notna(row[col]) and row[col].date() == expiring_today:
-                expiring_today_count_col += 1
+#for col in exp_date_columns:
+#    if col in filtered_df.columns:
+#        # FIX: Compare date parts only, handle NaT values properly
+#        expiring_today_count_col = 0
+#        for _, row in filtered_df.iterrows():
+#            if pd.notna(row[col]) and row[col].date() == expiring_today:
+#                expiring_today_count_col += 1
         
-        expiring_today_by_column[col] = expiring_today_count_col
-        st.sidebar.write(f"• {col}: {expiring_today_count_col} expiring today")
+#        expiring_today_by_column[col] = expiring_today_count_col
+#        st.sidebar.write(f"• {col}: {expiring_today_count_col} expiring today")
 
 # Process all columns and count documents by status
 #for _, row in filtered_df.iterrows():
