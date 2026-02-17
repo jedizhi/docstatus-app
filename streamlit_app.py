@@ -359,8 +359,8 @@ expiring_today_df = pd.DataFrame(expiring_today_details)
 #st.sidebar.write(f"• Total Critical Documents: {expired_count + renewal_count + expiring_today_count}")
 
 # Verification check
-total_from_columns = sum(expiring_today_by_column.values())
-st.sidebar.write(f"• Verification - Column sum: {total_from_columns}")
+#total_from_columns = sum(expiring_today_by_column.values())
+#st.sidebar.write(f"• Verification - Column sum: {total_from_columns}")
 
 # =====================
 # ROW 1: OVERVIEW METRICS & PIE CHARTS
