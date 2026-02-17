@@ -168,26 +168,34 @@ selected_company = st.sidebar.selectbox(
 # =====================
 filtered_df = df.copy()
 
+# Track whether any filter was actually applied
+filters_applied = False
+
 if ownership != "All":
     filtered_df = filtered_df[filtered_df["Ownership"] == ownership]
+    filters_applied = True
 
 if selected_registration != "All":
     filtered_df = filtered_df[
         filtered_df["Registration_Number"] == selected_registration
     ]
+    filters_applied = True
 
 if selected_equipment != "All":
     filtered_df = filtered_df[
         filtered_df["Equipment_Type"] == selected_equipment
     ]
+    filters_applied = True
 
-if selected_location != "All":# and "Location" in filtered_df.columns:
+if selected_location != "All" and "Location" in filtered_df.columns:
     filtered_df = filtered_df[
         filtered_df["Location"] == selected_location
     ]
+    filters_applied = True
+
 if selected_company != "All" and "Company_Name" in filtered_df.columns:
     filtered_df = filtered_df[filtered_df["Company_Name"] == selected_company]
-
+    filters_applied = True
 
 # Refresh button
 if st.sidebar.button("🔄 Refresh Data", type="primary"):
@@ -197,27 +205,57 @@ if st.sidebar.button("🔄 Refresh Data", type="primary"):
 st.sidebar.markdown("---")
 st.sidebar.markdown("📊 **EQUIPMENT AND VEHICLE DETAILS**")
 
-# DISPLAY FILTERED ITEMS IN THE SIDEBAR SECTION
+# ────────────────────────────────────────────────
+# Only show table / message if at least one filter was applied
+# ────────────────────────────────────────────────
+if filters_applied:
+    if not filtered_df.empty:
+        # Prepare 5-column display
+        display_cols = [
+            "Equipment_Type",
+            "Registration_Number",
+            "Company_Name",
+            "Location",
+            "Ownership"  # ← change this to your preferred 5th column
+        ]
 
-if not filtered_df.empty:
-    sidebar_table = filtered_df[[
-        "Ownership" ,
-        "Company_Name",
-        "Equipment_Type",
-        "Registration_Number",
-        "Location",
-    ]].copy()
+        # Only keep columns that exist
+        available_cols = [col for col in display_cols if col in filtered_df.columns]
 
-    sidebar_table.insert(0, "No.", range(1, len(sidebar_table) + 1))
+        if available_cols:
+            table_df = filtered_df[available_cols].copy()
+            table_df.insert(0, "No.", range(1, len(table_df) + 1))
 
-    st.sidebar.markdown("**Selected / Filtered Items**")
-    st.sidebar.dataframe(
-        sidebar_table,
-        use_container_width=True,
-        hide_index=True
-    )
+            # Nicer column names
+            table_df = table_df.rename(columns={
+                "Equipment_Type": "Equipment Type",
+                "Registration_Number": "Plate No.",
+                "Company_Name": "Company",
+                "Location": "Location",
+                "Ownership": "Ownership"
+            })
+
+            st.sidebar.markdown("**Filtered Results**")
+            st.sidebar.dataframe(
+                table_df,
+                use_container_width=True,
+                hide_index=True,
+                column_config={
+                    "No.": st.column_config.NumberColumn("No.", width="small"),
+                    "Equipment Type": st.column_config.TextColumn("Equipment Type", width="medium"),
+                    "Plate No.": st.column_config.TextColumn("Plate No.", width="small"),
+                    "Company": st.column_config.TextColumn("Company", width="medium"),
+                    "Location": st.column_config.TextColumn("Location", width="small"),
+                    "Ownership": st.column_config.TextColumn("Ownership", width="small")
+                }
+            )
+        else:
+            st.sidebar.info("No suitable columns found for display")
+    else:
+        st.sidebar.warning("No items match the selected filters")
 else:
-    st.sidebar.info("No matching items")
+    # No filters applied → do NOT show table or message
+    st.sidebar.info("Apply filters to see matching items")
 
 #st.sidebar.markdown("• Real-time document status tracking")
 #st.sidebar.markdown("• Interactive filtering options")
