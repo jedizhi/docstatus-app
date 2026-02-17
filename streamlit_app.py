@@ -214,8 +214,8 @@ if filters_applied:
         display_cols = [
             "Equipment_Type",
             "Registration_Number",
-            "Company_Name",
             "Location",
+            "Company_Name",
             "Ownership"  # ← change this to your preferred 5th column
         ]
 
@@ -230,8 +230,8 @@ if filters_applied:
             table_df = table_df.rename(columns={
                 "Equipment_Type": "Equipment Type",
                 "Registration_Number": "Plate No.",
-                "Company_Name": "Company",
                 "Location": "Location",
+                "Company_Name": "Company",
                 "Ownership": "Ownership"
             })
 
@@ -244,8 +244,8 @@ if filters_applied:
                     "No.": st.column_config.NumberColumn("No.", width="small"),
                     "Equipment Type": st.column_config.TextColumn("Equipment Type", width="medium"),
                     "Plate No.": st.column_config.TextColumn("Plate No.", width="small"),
-                    "Company": st.column_config.TextColumn("Company", width="medium"),
                     "Location": st.column_config.TextColumn("Location", width="small"),
+                    "Company": st.column_config.TextColumn("Company", width="medium"),
                     "Ownership": st.column_config.TextColumn("Ownership", width="small")
                 }
             )
