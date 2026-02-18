@@ -369,42 +369,42 @@ expiring_today_count = 0
 
 # Debug section - FIXED to use date comparison
 #st.sidebar.write("Debug - Document counts by column:")
-#expiring_today_by_column = {}
+expiring_today_by_column = {}
 
-#for col in exp_date_columns:
-#    if col in filtered_df.columns:
-#        # FIX: Compare date parts only, handle NaT values properly
-#        expiring_today_count_col = 0
-#        for _, row in filtered_df.iterrows():
-#            if pd.notna(row[col]) and row[col].date() == expiring_today:
-#                expiring_today_count_col += 1
+for col in exp_date_columns:
+    if col in filtered_df.columns:
+        # FIX: Compare date parts only, handle NaT values properly
+        expiring_today_count_col = 0
+        for _, row in filtered_df.iterrows():
+            if pd.notna(row[col]) and row[col].date() == expiring_today:
+                expiring_today_count_col += 1
         
-#        expiring_today_by_column[col] = expiring_today_count_col
-#        st.sidebar.write(f"• {col}: {expiring_today_count_col} expiring today")
+        expiring_today_by_column[col] = expiring_today_count_col
+        st.sidebar.write(f"• {col}: {expiring_today_count_col} expiring today")
 
 # Process all columns and count documents by status
-#for _, row in filtered_df.iterrows():
-#    for doc, status_col in zip(exp_date_columns, status_columns):
-#        if doc in filtered_df.columns and status_col in filtered_df.columns:
-#            detail = {
-#                "Equipment_Type": row["Equipment_Type"],
-#                "Ownership": row["Ownership"],
-#                "Company_Name": row["Company_Name"],
-#                "Registration_Number": row["Registration_Number"],
-#                "Document Type": doc,
-#                "Expiry Date": row[doc]
-#            }
+for _, row in filtered_df.iterrows():
+    for doc, status_col in zip(exp_date_columns, status_columns):
+        if doc in filtered_df.columns and status_col in filtered_df.columns:
+            detail = {
+                "Equipment_Type": row["Equipment_Type"],
+                "Ownership": row["Ownership"],
+                "Company_Name": row["Company_Name"],
+                "Registration_Number": row["Registration_Number"],
+                "Document Type": doc,
+                "Expiry Date": row[doc]
+            }
             
             # Count each document by its status
-#            if row[status_col] == "Expired":
-#                expired_details.append(detail)
-#                expired_count += 1
-#            elif row[status_col] == "For Renewal":
-#                renewal_details.append(detail)
-#                renewal_count += 1
-#            elif row[status_col] == "Expiring Today":
-#                expiring_today_details.append(detail)
-#                expiring_today_count += 1
+            if row[status_col] == "Expired":
+                expired_details.append(detail)
+                expired_count += 1
+            elif row[status_col] == "For Renewal":
+                renewal_details.append(detail)
+                renewal_count += 1
+            elif row[status_col] == "Expiring Today":
+                expiring_today_details.append(detail)
+                expiring_today_count += 1
 
 # Convert to DataFrames
 expired_df = pd.DataFrame(expired_details)
