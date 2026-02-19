@@ -314,7 +314,8 @@ if selected_company != "All":
 exp_date_columns = [
     "Registration_Expiry", "MVPI_Expiry", "Equipment_Insurance_Expiry", 
     "Third_Party_Expiry", "License_Expiry", 
-    "Cert_Expiry", "Medical_Insurance_Expiry", "Fitness_Expiry"
+    "Cert_Expiry", "Medical_Insurance_Expiry 1", "Fitness_Expiry 1",
+    "Certificate_Expiry", "Medical_Insurance_Expiry 2", "Fitness_Expiry 2"
 ]
 
 # First, clean N/A and NA values before datetime conversion
