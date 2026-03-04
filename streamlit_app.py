@@ -389,9 +389,9 @@ for _, row in filtered_df.iterrows():
         if doc in filtered_df.columns and status_col in filtered_df.columns:
             detail = {
                 "Equipment_Type": row["Equipment_Type"],
+                "Registration_Number": row["Registration_Number"],
                 "Ownership": row["Ownership"],
                 "Company_Name": row["Company_Name"],
-                "Registration_Number": row["Registration_Number"],
                 "Document Type": doc,
                 "Expiry Date": row[doc]
             }
