@@ -369,7 +369,7 @@ renewal_count = 0
 expiring_today_count = 0
 
 # Debug section - FIXED to use date comparison
-#st.sidebar.write("Debug - Document counts by column:")
+st.sidebar.write("Debug - Document counts by column:")
 expiring_today_by_column = {}
 
 for col in exp_date_columns:
