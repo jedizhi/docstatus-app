@@ -412,12 +412,12 @@ expired_df = pd.DataFrame(expired_details)
 renewal_df = pd.DataFrame(renewal_details)
 expiring_today_df = pd.DataFrame(expiring_today_details)
 
-#st.sidebar.write("---")
-#st.sidebar.write("📊 **Document Count Summary:**")
-#st.sidebar.write(f"• Expired Documents: {expired_count}")
-#st.sidebar.write(f"• Renewal Documents: {renewal_count}")
-#st.sidebar.write(f"• Today Documents: {expiring_today_count}")
-#st.sidebar.write(f"• Total Critical Documents: {expired_count + renewal_count + expiring_today_count}")
+st.sidebar.write("---")
+st.sidebar.write("📊 **Document Count Summary:**")
+st.sidebar.write(f"• Expired Documents: {expired_count}")
+st.sidebar.write(f"• Renewal Documents: {renewal_count}")
+st.sidebar.write(f"• Today Documents: {expiring_today_count}")
+st.sidebar.write(f"• Total Critical Documents: {expired_count + renewal_count + expiring_today_count}")
 
 # Verification check
 #total_from_columns = sum(expiring_today_by_column.values())
